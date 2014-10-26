@@ -1,5 +1,7 @@
 # Is.Valid.Mongo
 
+[![Build Status](https://travis-ci.org/bahaagalal/is.valid.mongo.png?branch=master)](https://travis-ci.org/bahaagalal/is.valid.mongo)
+
 Extend [is.valid](https://github.com/bahaagalal/is.valid) library to validate objects that are saved to Mongo DB Server
 
 ## How to use
