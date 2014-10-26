@@ -1,6 +1,6 @@
 {
   "name": "is.valid.mongo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "BahaaGalal <bahaa.g.ali@gmail.com>",
   "description": "extends is.valid lib and add validation rules that are specific to mongo db objects.",
   "main": "./lib/is.valid.mongo.js",
@@ -25,7 +25,7 @@
     "mongodb-connect": "~0.1.2"
   },
   "dependencies": {
-    "is.valid": "~0.2.3",
+    "is.valid": "~0.3.0",
     "mongodb": "~1.4.19"
   }
 }
