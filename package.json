@@ -21,7 +21,8 @@
   },
   "devDependencies": {
     "mocha": "~2.0.1",
-    "chai": "~1.9.2"
+    "chai": "~1.9.2",
+    "mongodb-connect": "~0.1.2"
   },
   "dependencies": {
     "is.valid": "~0.2.3",
