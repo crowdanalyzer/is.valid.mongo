@@ -16,8 +16,11 @@ describe('validate', function(){
 	before(function(done){
 		mongo.connect(config.mongodb, function(err, db){
 			mongodb = db;
+			mongodb.dropDatabase();
 			mongodb.collection('validations').update({'email': 'bahaa.galal@crowdanalyzer.com'}, {'email': 'bahaa.galal@crowdanalyzer.com', 'delete_flag': '0'}, {safe: true, upsert: true}, function(err, success){
-				done();
+				mongodb.collection('validations').update({'user': {'email': 'bahaa@crowdanalyzer.com'}}, {'user': {'email': 'bahaa@crowdanalyzer.com'}, 'delete_flag': '0'}, {safe: true, upsert: true}, function(err, success){
+					done();
+				});
 			});
 		});
 	});
@@ -68,13 +71,13 @@ describe('validate', function(){
 			});
 		});
 
-		it('should add contextual check if applicable', function(done){
+		it('should be able to track complex inside object validation', function(done){
 			var validate = new Validate({
 				email: 'bahaa.galal@crowdanalyzer.com'
 			});
 
 			validate.setDBDriver(mongodb);
-			validate.addRule('email', 'email', 'required|exists[validations.email.delete_flag.1]');
+			validate.addRule('email', 'email', 'required|exists[validations.user.email]');
 			validate.run(function(err, data){
 				expect(err).to.not.be.null;
 				expect(err).to.be.an('object');
@@ -90,7 +93,20 @@ describe('validate', function(){
 			});
 
 			validate.setDBDriver(mongodb);
-			validate.addRule('email', 'email', 'required|exists[validations.email.delete_flag.0]');
+			validate.addRule('email', 'email', 'required|exists[validations.email]');
+			validate.run(function(err, data){
+				expect(err).to.be.null;
+				done();
+			});
+		});
+
+		it('should return true if user.email exists', function(done){
+			var validate = new Validate({
+				email: 'bahaa@crowdanalyzer.com'
+			});
+
+			validate.setDBDriver(mongodb);
+			validate.addRule('email', 'email', 'required|exists[validations.user.email]');
 			validate.run(function(err, data){
 				expect(err).to.be.null;
 				done();
@@ -116,13 +132,13 @@ describe('validate', function(){
 			});
 		});
 
-		it('should add contextual check if applicable', function(done){
+		it('should be able to track nested objects', function(done){
 			var validate = new Validate({
-				email: 'bahaa.galal@crowdanalyzer.com'
+				email: 'bahaa@crowdanalyzer.com'
 			});
 
 			validate.setDBDriver(mongodb);
-			validate.addRule('email', 'email', 'required|unique[validations.email.delete_flag.0]');
+			validate.addRule('email', 'email', 'required|unique[validations.user.email]');
 			validate.run(function(err, data){
 				expect(err).to.not.be.null;
 				expect(err).to.be.an('object');
@@ -132,13 +148,26 @@ describe('validate', function(){
 			});
 		});
 
-		it('should return true if email and contextual check is unique', function(done){
+		it('should return true if email is unique', function(done){
+			var validate = new Validate({
+				email: 'bahaa@crowdanalyzer.com'
+			});
+
+			validate.setDBDriver(mongodb);
+			validate.addRule('email', 'email', 'required|unique[validations.email]');
+			validate.run(function(err, data){
+				expect(err).to.be.null;
+				done();
+			});
+		});
+
+		it('should return true if user.email is unique', function(done){
 			var validate = new Validate({
 				email: 'bahaa.galal@crowdanalyzer.com'
 			});
 
 			validate.setDBDriver(mongodb);
-			validate.addRule('email', 'email', 'required|unique[validations.email.delete_flag.1]');
+			validate.addRule('email', 'email', 'required|unique[validations.user.email]');
 			validate.run(function(err, data){
 				expect(err).to.be.null;
 				done();
