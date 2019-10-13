@@ -3,7 +3,7 @@ var mongo = require('mongodb-connect');
 var Validate = require(__dirname + '/../lib/is.valid.mongo');
 var config = {
 	mongodb: {
-		host: '127.0.0.1',
+		host: 'mongo',
 		port: 27017,
 		db: 'is_valid_mongo_test'
 	}

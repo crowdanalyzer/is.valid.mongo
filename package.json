@@ -1,6 +1,6 @@
 {
-  "name": "is.valid.mongo",
-  "version": "0.1.6",
+  "name": "@crowdanalyzer/is.valid.mongo",
+  "version": "1.0.0",
   "author": "BahaaGalal <bahaa.g.ali@gmail.com>",
   "description": "extends is.valid lib and add validation rules that are specific to mongo db objects.",
   "main": "./lib/is.valid.mongo.js",
@@ -17,15 +17,21 @@
     "node": ">=0.10"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/*.js"
+    "test": "./node_modules/mocha/bin/mocha test/*.js",
+    "lint": "eslint ./lib/ ./test/",
+    "docker": "docker-compose up -d --build && docker exec -it ${PWD##*/} bash"
   },
   "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-crowdanalyzer": "^1.4.1",
     "mocha": "~2.0.1",
     "chai": "~1.9.2",
     "mongodb-connect": "~0.1.2"
   },
   "dependencies": {
-    "is.valid": "*",
-    "mongodb": "*"
+    "is.valid": "*"
+  },
+  "peerDependencies": {
+    "mongodb": "^2.2.33"
   }
 }
