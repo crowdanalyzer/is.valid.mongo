@@ -23,7 +23,7 @@ ENV PATH /home/node/app/node_modules/.bin:$PATH
 RUN mkdir -p /home/node/deps /home/node/app
 
 WORKDIR /home/node/deps
-COPY ["package.json", "package-lock.json*", "./"]
+COPY [".npmrc", "package.json", "package-lock.json*", "./"]
 RUN npm install --quiet
 
 WORKDIR /home/node/app
